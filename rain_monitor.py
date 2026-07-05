@@ -534,6 +534,7 @@ tr:hover td{background:rgba(59,130,246,0.03);}
 .chart-btn, .sort-btn{padding:5px 12px;border-radius:3px;border:none;background:transparent;color:var(--t3);font-family:'DM Sans',sans-serif;font-size:10.5px;font-weight:500;cursor:pointer;transition:all 0.2s;}
 .chart-btn:hover:not(.active), .sort-btn:hover:not(.active){color:var(--t1);}
 .chart-btn.active, .sort-btn.active{background:var(--bl5);color:#F0F9FF;}
+#mainChart{width:100%!important;height:100%!important;display:block;}
 
 @media(max-width:768px){
   .wrap{padding:14px;}
