@@ -1,0 +1,6 @@
+rain_monsoon_monitor.html
+output/
+__pycache__/
+*.pyc
+.env
+*.cache.json
