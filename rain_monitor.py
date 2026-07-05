@@ -529,12 +529,20 @@ tr:hover td{background:rgba(59,130,246,0.03);}
 .method td{padding:5px 8px;font-family:'DM Sans',sans-serif;border-bottom:1px solid var(--bd2);}
 .footer{text-align:center;padding:16px 0;font-size:9.5px;color:var(--t3);border-top:1px solid var(--bd2);margin-top:10px;}
 
+/* Chart section */
+.chart-legend{display:flex;gap:16px;flex-wrap:wrap;align-items:center;}
+.chart-btn, .sort-btn{padding:5px 12px;border-radius:3px;border:none;background:transparent;color:var(--t3);font-family:'DM Sans',sans-serif;font-size:10.5px;font-weight:500;cursor:pointer;transition:all 0.2s;}
+.chart-btn:hover:not(.active), .sort-btn:hover:not(.active){color:var(--t1);}
+.chart-btn.active, .sort-btn.active{background:var(--bl5);color:#F0F9FF;}
+
 @media(max-width:768px){
   .wrap{padding:14px;}
   h1{font-size:22px;}
   .card .val{font-size:20px;}
   .dev-block{float:none;text-align:center;margin:0 0 10px 0;}
   .dev-big{font-size:44px;}
+  #chartSection .section-header{flex-direction:column;align-items:flex-start;}
+  .chart-legend{gap:10px;}
 }
 </style>
 </head>
