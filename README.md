@@ -1,28 +1,34 @@
-# Rain Monitor — India SW Monsoon Tracker
+# Rain Monitor v4 — India SW Monsoon Tracker
 
-Real-time tracking of the Southwest Monsoon (June 1 – September 30) across all 36 IMD meteorological subdivisions, sourced directly from the official IMD data feed.
+Real-time tracking of the Southwest Monsoon (June 1 – September 30) across all 36 IMD meteorological subdivisions + pan-India + 4 broad regions, sourced directly from IMD.
 
 **Live dashboard:** https://anandshah81.github.io/rain-monitor/
 
-## Data source
+## Data sources (all IMD, all official)
 
-100% IMD official data, scraped from:
-- `https://imdpune.gov.in/seasons/cumulative.html` — cumulative % departure from LPA per subdivision
+- `https://imdpune.gov.in/seasons/cumulative.html` — cumulative % departure per subdivision (36 rows)
 - `https://imdpune.gov.in/seasons/weekbyweek.html` — weekly % departure per subdivision
-
-Both are published by the Climate Research & Services Division at IMD Pune and updated weekly (typically Thursdays). These are the same numbers cited in IMD's weekly rainfall bulletins and by news outlets, agri-analysts, and policy makers.
+- `https://imdpune.gov.in/seasons/allindia.html` — all-India daily rainfall (mm) + IMD's official area-weighted % departure
+- `https://imdpune.gov.in/seasons/nwindia.html` — Northwest India regional daily mm + official % departure
+- `https://imdpune.gov.in/seasons/centralindia.html` — Central India
+- `https://imdpune.gov.in/seasons/southpeninsularindia.html` — South Peninsula
+- `https://imdpune.gov.in/seasons/eastandnortheastindia.html` — East & Northeast India
 
 ## What it tracks
 
-- **Cumulative % departure from LPA** per subdivision (headline metric)
+- **Headline pan-India departure** — IMD's official area-weighted number (fixes the simple-mean bias from v3)
+- **Cumulative rainfall mm** — actual and 1971-2020 normal, pan-India and per region
+- **Daily rainfall chart** — actual bars vs normal line; toggle to cumulative view
+- **Regional departure %** — IMD's official area-weighted for 4 broad regions with per-region mm figures
+- **Per-subdivision cumulative departure %** — all 36 subdivisions with categories and week-on-week Δ
 - **IMD deficit categories** — Large Excess (≥+60%), Excess (+20-59%), Normal (±19%), Deficient (−20 to −59%), Large Deficient (≤−60%)
-- **Week-on-week Δ** — how the cumulative departure changed from prior week's reading
-- **Regional aggregates** — 4 broad homogeneous regions (Northwest, Central, South, East & NE)
-- **Distribution counts** — how many subdivisions in each category, per region and pan-India
 
 ## Cadence
 
-IMD updates the underlying tables weekly on Thursdays. Rerun `refresh.bat` on Thursday evenings for fresh data. Between updates, the dashboard shows the last published reading unchanged (intentional — the source data hasn't moved).
+- **Daily mm figures**: IMD updates the allindia + regional pages ~daily (typically morning IST)
+- **Subdivision % departure**: IMD updates cumulative.html + weekbyweek.html weekly, typically Thursdays
+
+Rerun `refresh.bat` any morning for fresh daily mm; Thursday afternoons for fresh subdivision-level departure numbers.
 
 ## Files
 
@@ -41,7 +47,11 @@ python rain_monitor.py     # Test locally — writes rain_monsoon_monitor.html
 
 For live deployment: `refresh.bat` handles fetch → generate → commit → push.
 
-## Caveats
+## v4 changes vs v3
 
-- **Pan-India aggregate** is a simple mean of subdivision-level departure %. IMD's official all-India LPA uses proper area-weighted computation, so our pan-India number may differ from IMD's headline all-India figure by a few percentage points. Individual subdivision numbers match IMD verbatim.
-- **IF IMD is unreachable** at fetch time, the script errors and refresh.bat aborts before pushing — the live site keeps showing the last successful update.
+- Added pull from IMD's allindia + 4 regional pages for daily mm data
+- **Headline pan-India + regional aggregates now use IMD's official area-weighted % departure** (v3 used a simple mean of subdivisions, which understated the deficit ~9pp)
+- Added cumulative Actual mm and Normal mm cards
+- Added daily rainfall chart (bars for actual, line for normal) with cumulative toggle
+- Added per-region mm figures to the 4 regional cards
+- Refresh cadence now daily-eligible (for mm figures) instead of weekly-only
